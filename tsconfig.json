@@ -17,8 +17,7 @@
 		"types": [
 			"node",
 			"webpack-env",
-			"react",
-			"jest"
+			"react"
 		],
 		"typeRoots": [
 			"types.d.ts",
@@ -54,10 +53,10 @@
 		".*/"
 	],
 	"include": [
-			".eslintrc.js",
-			"types.d.ts",
-			"src",
-			"babel.config.js",
-			"polyfills.js"
+		".eslintrc.js",
+		"types.d.ts",
+		"src",
+		"babel.config.js",
+		"polyfills.js"
 	]
 }
