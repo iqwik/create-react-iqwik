@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "author": "Artem Zubarev aka iqwik",
+  "git repository": "https://github.com/iqwik/create-react-iqwik",
   "scripts": {
     "build": "webpack --config config/webpack.prod.js --color -p --hide-modules --display-optimization-bailout",
     "watch": "nodemon --exec \"webpack-dev-server --config config/webpack.dev.js\"",
