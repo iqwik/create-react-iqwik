@@ -1,0 +1,63 @@
+{
+	"compilerOptions": {
+		"target": "es6",
+		"module": "esnext",
+		"moduleResolution": "node",
+		"jsx": "react",
+		"baseUrl": ".",
+		"outDir": "build",
+		"lib": [
+			"dom",
+			"es2015",
+			"es2016",
+			"es2017",
+			"es2020",
+			"esnext"
+		],
+		"types": [
+			"node",
+			"webpack-env",
+			"react",
+			"jest"
+		],
+		"typeRoots": [
+			"types.d.ts",
+			"node_modules/@types"
+		],
+		"paths": {
+				"_app/*": ["src/*"]
+		},
+		"newLine": "lf",
+		"resolveJsonModule": true,
+		"allowJs": true,
+		"allowSyntheticDefaultImports": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUnusedParameters": true,
+		"noUnusedLocals": true,
+		"noImplicitReturns": true,
+		"noEmit": true,
+		"strict": true,
+		"esModuleInterop": true,
+		"isolatedModules": true,
+		"skipLibCheck": true,
+		"noImplicitAny": false,
+		"declaration": true,
+		"forceConsistentCasingInFileNames": true,
+		"suppressImplicitAnyIndexErrors": true,
+		"checkJs": false,
+		"experimentalDecorators": true,
+		"sourceMap": true
+	},
+	"exclude": [
+		"node_modules",
+		"build",
+		".*/"
+	],
+	"include": [
+			".eslintrc.js",
+			"types.d.ts",
+			"src",
+			"babel.config.js",
+			"polyfills.js"
+	]
+}

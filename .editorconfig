@@ -1,0 +1,35 @@
+# https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
+# quotes bug - https://youtrack.jetbrains.com/issue/IDEA-232474
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false
+
+[{*.js,*.jsx}]
+ij_javascript_use_double_quotes = false
+ij_javascript_force_quote_style = true
+ij_javascript_spaces_within_brackets = true
+ij_javascript_spaces_within_imports = true
+ij_javascript_spaces_within_interpolation_expressions = true
+ij_javascript_blacklist_imports = node_modules/*
+ij_javascript_use_path_mapping = different_paths
+
+[{*.ts,*.tsx}]
+ij_typescript_use_double_quotes = false
+ij_typescript_force_quote_style = true
+ij_typescript_spaces_within_brackets = true
+ij_typescript_spaces_within_imports = true
+ij_typescript_spaces_within_interpolation_expressions = true
+ij_typescript_blacklist_imports = node_modules/*
+ij_typescript_use_path_mapping = different_paths
+
+[{*.json,*.css,*.scss,*.sass,*.html}]
