@@ -7,10 +7,12 @@ const chalk = require('chalk')
 
 const packageJson = require("../package.json")
 
-const scripts = `"build": "webpack --config config/webpack.prod.js --color -p --hide-modules --display-optimization-bailout",
-"watch": "nodemon --exec \"webpack-dev-server --config config/webpack.dev.js\"",
-"lint": "eslint --ignore-path .gitignore --ext .js,.jsx,.ts,.tsx .",
-"prunecache": "rimraf ./node_modules/.cache/"`
+const scripts = `scripts: {
+    "build": "webpack --config config/webpack.prod.js --color -p --hide-modules --display-optimization-bailout",
+    "watch": "nodemon --exec \"webpack-dev-server --config config/webpack.dev.js\"",
+    "lint": "eslint --ignore-path .gitignore --ext .js,.jsx,.ts,.tsx .",
+    "prunecache": "rimraf ./node_modules/.cache/"
+}`
 
 // const babel = `"babel": ${JSON.stringify(packageJson.babel)}`
 
@@ -29,7 +31,7 @@ console.log(chalk.yellow('Initializing project..'))
 
 // создадим папку и инициализируем npm-проект
 exec(
-    `mkdir ${process.argv[2]} && cd ${process.argv[2]} && yarn init --yes`,
+    `mkdir ${process.argv[2]} && cd ${process.argv[2]} && mkdir config && cd config && mkdir utils && cd ../ && yarn init --yes`,
     (onInitError) => {
         if (onInitError) {
             console.log()
@@ -43,13 +45,9 @@ exec(
             if (error) {
                 throw error
             }
-
-            console.log()
-            console.log(chalk.pink(file.toString()))
-
             const data = file
                 .toString()
-                .replace('"test": "echo \\"Error: no test specified\\" && exit 1"', scripts)
+                .replace('"license": "MIT"', scripts)
                 // .replace('"keywords": []', babel)
 
             fs.writeFile(packageJSON, data, (innerError) => {
@@ -82,14 +80,10 @@ exec(
         ]
 
         for (let i = 0; i < filesToCopy.length; i += 1) {
-            try {
-                fs.createReadStream(path.join(__dirname, `../${filesToCopy[i]}`))
-                    .pipe(
-                        fs.createWriteStream(`${process.argv[2]}/${filesToCopy[i]}`)
-                    )
-            } catch (error) {
-                throw error
-            }
+            fs.createReadStream(path.join(__dirname, `../${filesToCopy[i]}`))
+                .pipe(
+                    fs.createWriteStream(`${process.argv[2]}/${filesToCopy[i]}`)
+                )
         }
         // yarn, при установке пакета, удалит файл .gitignore, поэтому его нельзя скопировать из локальной папки шаблона,
         // этот файл нужно загрузить. После отправки кода в GitHub-репозиторий пользуйтесь raw-файлом .gitignore
@@ -114,7 +108,7 @@ exec(
             }
         )
         console.log()
-        console.log(chalk.green('yarn init -- done'))
+        console.log(chalk.green.bold('yarn init -- done'))
         console.log()
         // установка зависимостей
         console.log(chalk.yellow('Installing deps -- it might take a few minutes...'))
@@ -132,14 +126,14 @@ exec(
                 console.log()
                 console.log(yarnStdout)
                 console.log()
-                console.log(chalk.cyan('Dependencies installed!'))
+                console.log(chalk.green.bold('Dependencies installed!'))
                 console.log()
-                console.log('Copying additional files..')
+                console.log(chalk.yellow('Copying additional files..'))
                 // копирование дополнительных файлов с кодом
                 fs.copy(path.join(__dirname, "../src"), `${process.argv[2]}/src`)
                     .then(() => {
                         console.log()
-                        console.log(chalk.green('Success! Your project is now ready'))
+                        console.log(chalk.green.bold('Success! Your project is now ready'))
                         console.log()
                         console.log('Inside that directory, you can run several commands:')
                         console.log()
@@ -155,7 +149,7 @@ exec(
                         console.log(chalk.cyan('  yarn prunecache'))
                         console.log('    Clears node_modules/.cache/')
                         console.log()
-                        console.log('Happy hacking!')
+                        console.log(chalk.yellow('Happy hacking!'))
                     })
                     .catch((err) => console.error(err))
             }
