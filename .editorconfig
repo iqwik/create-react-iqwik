@@ -33,3 +33,5 @@ ij_typescript_blacklist_imports = node_modules/*
 ij_typescript_use_path_mapping = different_paths
 
 [{*.json,*.css,*.scss,*.sass,*.html}]
+indent_style = space
+indent_size = 2

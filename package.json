@@ -9,6 +9,9 @@
   "license": "MIT",
   "author": "Artem Zubarev <iqwik@mail.ru> (https://iqwik.ru)",
   "description": "Prepared empty project for fast development. Includes last versions of: react + webpack + babel + eslint + typescript and etc.",
+  "bin": {
+    "create-react-iqwik": "./bin/start.js"
+  },
   "scripts": {
     "build": "webpack --config config/webpack.prod.js --color -p --hide-modules --display-optimization-bailout",
     "watch": "nodemon --exec \"webpack-dev-server --config config/webpack.dev.js\"",
