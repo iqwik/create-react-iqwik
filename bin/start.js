@@ -24,7 +24,8 @@ const getDeps = (deps) => (
         .replace(/fs-extra[^\s]+/g, "")
 )
 
-console.log("Initializing project..")
+console.log()
+console.log(chalk.yellow('Initializing project..'))
 
 // создадим папку и инициализируем npm-проект
 exec(
@@ -42,20 +43,30 @@ exec(
             if (error) {
                 throw error
             }
+
+            console.log()
+            console.log(chalk.pink(file.toString()))
+
             const data = file
                 .toString()
                 .replace('"test": "echo \\"Error: no test specified\\" && exit 1"', scripts)
                 // .replace('"keywords": []', babel)
-            fs.writeFile(packageJSON, data, (innerError) => innerError || true)
+
+            fs.writeFile(packageJSON, data, (innerError) => {
+                if (innerError) {
+                    console.error(chalk.red(innerError))
+                    return
+                }
+                return true
+            })
         })
 
         const filesToCopy = [
             ".editorconfig",
             ".eslintrc.js",
             "babel.config.js",
-            "LICENSE",
             "nodemon.json",
-            "polyfill.js",
+            "polyfills.js",
             "README.md",
             "tsconfig.json",
             "types.d.ts",
@@ -71,10 +82,14 @@ exec(
         ]
 
         for (let i = 0; i < filesToCopy.length; i += 1) {
-            fs.createReadStream(path.join(__dirname, `../${filesToCopy[i]}`))
-                .pipe(
-                    fs.createWriteStream(`${process.argv[2]}/${filesToCopy[i]}`)
-                )
+            try {
+                fs.createReadStream(path.join(__dirname, `../${filesToCopy[i]}`))
+                    .pipe(
+                        fs.createWriteStream(`${process.argv[2]}/${filesToCopy[i]}`)
+                    )
+            } catch (error) {
+                throw error
+            }
         }
         // yarn, при установке пакета, удалит файл .gitignore, поэтому его нельзя скопировать из локальной папки шаблона,
         // этот файл нужно загрузить. После отправки кода в GitHub-репозиторий пользуйтесь raw-файлом .gitignore
@@ -102,7 +117,7 @@ exec(
         console.log(chalk.green('yarn init -- done'))
         console.log()
         // установка зависимостей
-        console.log('Installing deps -- it might take a few minutes...')
+        console.log(chalk.yellow('Installing deps -- it might take a few minutes...'))
 
         const devDeps = getDeps(packageJson.devDependencies)
         const deps = getDeps(packageJson.dependencies)
@@ -117,7 +132,7 @@ exec(
                 console.log()
                 console.log(yarnStdout)
                 console.log()
-                console.log('Dependencies installed!')
+                console.log(chalk.cyan('Dependencies installed!'))
                 console.log()
                 console.log('Copying additional files..')
                 // копирование дополнительных файлов с кодом
