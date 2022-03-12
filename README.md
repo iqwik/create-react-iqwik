@@ -5,7 +5,8 @@ ___
 /
 ## Installation
 You can install theme in your environment globaly:
-### `yarn global add create-react-iqwik`
+### `yarn global create react-iqwik your-local-folder`
+or
 ### `yarn create react-iqwik your-local-folder`
 ___
 /

@@ -7,13 +7,13 @@ const chalk = require('chalk')
 
 const packageJson = require("../package.json")
 
-const scripts = `"scripts": {
+const scripts = `"license": "MIT",
+  "scripts": {
     "build": "webpack --config config/webpack.prod.js --color -p --hide-modules --display-optimization-bailout",
     "watch": "webpack-dev-server --config config/webpack.dev.js",
     "lint": "eslint --ignore-path .gitignore --ext .js,.jsx,.ts,.tsx .",
     "prunecache": "rimraf ./node_modules/.cache/"
-  }
-`
+  }`
 
 // const babel = `"babel": ${JSON.stringify(packageJson.babel)}`
 
