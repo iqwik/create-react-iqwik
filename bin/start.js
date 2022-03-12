@@ -52,7 +52,7 @@ exec(
         const filesToCopy = [
             ".editorconfig",
             ".eslintrc.js",
-            "babel.config/js",
+            "babel.config.js",
             "LICENSE",
             "nodemon.json",
             "polyfill.js",
