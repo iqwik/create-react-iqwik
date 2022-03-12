@@ -3,6 +3,7 @@ const fs = require("fs-extra")
 const path = require("path")
 const https = require("https")
 const { exec } = require("child_process")
+const chalk = require('chalk')
 
 const packageJson = require("../package.json")
 
@@ -31,7 +32,7 @@ exec(
     (onInitError) => {
         if (onInitError) {
             console.log()
-            console.error(`Error: ${onInitError}`)
+            console.error(chalk.red(`Error: ${onInitError}`))
             return
         }
 
@@ -97,42 +98,46 @@ exec(
                 })
             }
         )
-
-        console.log("yarn init -- done\n")
-
+        console.log()
+        console.log(chalk.green('yarn init -- done'))
+        console.log()
         // установка зависимостей
-        console.log("Installing deps -- it might take a few minutes..")
+        console.log('Installing deps -- it might take a few minutes...')
+
         const devDeps = getDeps(packageJson.devDependencies)
         const deps = getDeps(packageJson.dependencies)
         exec(
             `cd ${process.argv[2]} && git init && node -v && yarn -v && yarn add -D ${devDeps} && yarn add ${deps}`,
             (yarnError, yarnStdout, yarnStderr) => {
                 if (yarnError) {
-                    console.error(`Some error while installing dependencies ${yarnError}`)
+                    console.log()
+                    console.error(chalk.red(`Some error while installing dependencies ${yarnError}`))
                     return
                 }
+                console.log()
                 console.log(yarnStdout)
-                console.log("Dependencies installed")
-
-                console.log("Copying additional files..")
+                console.log()
+                console.log('Dependencies installed!')
+                console.log()
+                console.log('Copying additional files..')
                 // копирование дополнительных файлов с кодом
                 fs.copy(path.join(__dirname, "../src"), `${process.argv[2]}/src`)
                     .then(() => {
                         console.log()
-                        console.log('Success! Your project is now ready')
+                        console.log(chalk.green('Success! Your project is now ready'))
                         console.log()
                         console.log('Inside that directory, you can run several commands:')
                         console.log()
-                        console.log('  yarn watch')
+                        console.log(chalk.cyan('  yarn watch'))
                         console.log('    Starts the development server.')
                         console.log()
-                        console.log('  yarn build')
+                        console.log(chalk.cyan('  yarn build'))
                         console.log('    Bundles the app into static files for production.')
                         console.log()
-                        console.log('  yarn lint')
+                        console.log(chalk.cyan('  yarn lint'))
                         console.log('    Starts eslint check.')
                         console.log()
-                        console.log('  yarn prunecache')
+                        console.log(chalk.cyan('  yarn prunecache'))
                         console.log('    Clears node_modules/.cache/')
                         console.log()
                         console.log('Happy hacking!')
