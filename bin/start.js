@@ -7,12 +7,13 @@ const chalk = require('chalk')
 
 const packageJson = require("../package.json")
 
-const scripts = `scripts: {
+const scripts = `"scripts": {
     "build": "webpack --config config/webpack.prod.js --color -p --hide-modules --display-optimization-bailout",
-    "watch": "nodemon --exec \"webpack-dev-server --config config/webpack.dev.js\"",
+    "watch": "webpack-dev-server --config config/webpack.dev.js",
     "lint": "eslint --ignore-path .gitignore --ext .js,.jsx,.ts,.tsx .",
     "prunecache": "rimraf ./node_modules/.cache/"
-}`
+  }
+`
 
 // const babel = `"babel": ${JSON.stringify(packageJson.babel)}`
 
@@ -63,8 +64,6 @@ exec(
             ".editorconfig",
             ".eslintrc.js",
             "babel.config.js",
-            "nodemon.json",
-            "polyfills.js",
             "README.md",
             "tsconfig.json",
             "types.d.ts",
@@ -116,7 +115,7 @@ exec(
         const devDeps = getDeps(packageJson.devDependencies)
         const deps = getDeps(packageJson.dependencies)
         exec(
-            `cd ${process.argv[2]} && git init && node -v && yarn -v && yarn add -D ${devDeps} && yarn add ${deps}`,
+            `cd ${process.argv[2]} && node -v && yarn -v && yarn add -D ${devDeps} && yarn add ${deps}`,
             (yarnError, yarnStdout, yarnStderr) => {
                 if (yarnError) {
                     console.log()

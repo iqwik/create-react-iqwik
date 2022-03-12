@@ -2,11 +2,13 @@
 
 It's prepared empty react-theme for fast development. Includes last versions of: react + webpack + babel + eslint + typescript and etc.
 ___
+/
 ## Installation
 You can install theme in your environment globaly:
 ### `yarn global add create-react-iqwik`
 ### `yarn create react-iqwik your-local-folder`
 ___
+/
 ## Available Scripts
 In the project directory, you can run:
 

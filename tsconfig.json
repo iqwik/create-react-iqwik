@@ -24,7 +24,7 @@
 			"node_modules/@types"
 		],
 		"paths": {
-				"_app/*": ["src/*"]
+			"_app/*": ["src/*"]
 		},
 		"newLine": "lf",
 		"resolveJsonModule": true,
@@ -56,7 +56,6 @@
 		".eslintrc.js",
 		"types.d.ts",
 		"src",
-		"babel.config.js",
-		"polyfills.js"
+		"babel.config.js"
 	]
 }
