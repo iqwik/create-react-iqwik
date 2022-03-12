@@ -27,10 +27,11 @@ console.log("Initializing project..")
 
 // создадим папку и инициализируем npm-проект
 exec(
-    `mkdir ${process.argv[2]} && cd ${process.argv[2]} && yarn init -f`,
+    `mkdir ${process.argv[2]} && cd ${process.argv[2]} && yarn init --yes`,
     (onInitError) => {
         if (onInitError) {
-            console.error(`Everything was fine, then it wasn't: ${onInitError}`)
+            console.log()
+            console.error(`Error: ${onInitError}`)
             return
         }
 
