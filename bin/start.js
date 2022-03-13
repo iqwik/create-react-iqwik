@@ -110,7 +110,7 @@ exec(
         console.log(chalk.green.bold('yarn init -- done'))
         console.log()
         // установка зависимостей
-        console.log(chalk.yellow('Installing deps -- it might take a few minutes...'))
+        console.log(chalk.yellow('Installing template dependencies -- it might take a few minutes...'))
 
         const devDeps = getDeps(packageJson.devDependencies)
         const deps = getDeps(packageJson.dependencies)
