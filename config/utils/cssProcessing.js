@@ -10,7 +10,6 @@ const cssProcessing = ({ withModules = true }) => {
                 loader: MiniCssExtractPlugin.loader,
                 options: {
                     esModule: false,
-                    // publicPath: 'assets',
                 },
             },
             { ...cacheLoader() },

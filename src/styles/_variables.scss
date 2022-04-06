@@ -1,1 +1,6 @@
-// some variables here...
+$font-path: "../assets/fonts/";
+
+@import "./_mixins.scss";
+
+// usage
+// @include font("YourFont");

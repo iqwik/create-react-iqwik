@@ -1,0 +1,27 @@
+@function getFont($file-name) {
+  @return $font-path + $file-name;
+}
+
+@mixin font(
+  $name,
+  $local: $name,
+  $file-name: $name,
+  $style: normal,
+  $weight: normal,
+) {
+  @font-face {
+    font-family: $name;
+    font-style: $style;
+    font-weight: $weight;
+    font-display: swap;
+    src: url(getFont($file-name + ".eot"));
+    /* IE9 Compat Modes */
+    src: local($local),
+    url(getFont($file-name + ".eot?#iefix")) format("embedded-opentype"),
+    url(getFont($file-name + ".woff2")) format("woff2"),
+    url(getFont($file-name + ".woff")) format("woff"),
+    url(getFont($file-name + ".ttf")) format("truetype"),
+    url(getFont($file-name + ".svg#OpenSans")) format("svg");
+    /* Legacy iOS */
+  }
+}
