@@ -61,6 +61,7 @@ module.exports = {
         'react/no-array-index-key': 'off',
         'react/state-in-constructor': 'off',
         'react/display-name': 'off',
+        'func-names': ['error', 'as-needed'],
         'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
         'react/no-multi-comp': ['error', { ignoreStateless: true }],
         'import/no-named-as-default': 'off',

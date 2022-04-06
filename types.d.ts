@@ -1,4 +1,6 @@
 /* eslint-disable no-useless-escape */
+declare module 'core-js/stable'
+declare module 'regenerator-runtime/runtime'
 
 declare module '*.scss'
 

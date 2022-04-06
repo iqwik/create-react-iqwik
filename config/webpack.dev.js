@@ -1,5 +1,5 @@
 const path = require('path')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const { DefinePlugin } = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -10,7 +10,9 @@ module.exports = merge(commonConfig, {
     mode: 'development',
     devtool: 'cheap-module-source-map',
     devServer: {
-        contentBase: path.resolve(__dirname, `../${BUNDLE_FOLDER}`),
+        static: {
+            directory: path.resolve(__dirname, `../${BUNDLE_FOLDER}`),
+        },
         open: true,
         hot: true,
     },

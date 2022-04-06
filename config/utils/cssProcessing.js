@@ -18,8 +18,11 @@ const cssProcessing = ({ withModules = true }) => {
                 loader: 'css-loader',
                 options: {
                     importLoaders: 1,
-                    localIdentName: '[folder]__[local]__[hash:base64:6]',
-                    modules: withModules,
+                    ...(withModules ? {
+                        modules: {
+                            localIdentName: '[folder]__[local]__[hash:base64:6]',
+                        },
+                    } : {}),
                     sourceMap: true,
                 },
             },

@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-const fs = require("fs-extra")
-const path = require("path")
-const https = require("https")
-const { exec } = require("child_process")
+
+const fs = require('fs-extra')
+const path = require('path')
+const https = require('https')
+const { exec } = require('child_process')
 const chalk = require('chalk')
 
-const packageJson = require("../package.json")
+const packageJson = require('../package.json')
 
 const scripts = `"license": "MIT",
   "scripts": {
@@ -15,24 +16,22 @@ const scripts = `"license": "MIT",
     "prunecache": "rimraf ./node_modules/.cache/"
   }`
 
-// const babel = `"babel": ${JSON.stringify(packageJson.babel)}`
-
 const getDeps = (deps) => (
     Object.entries(deps)
         .map((dep) => `${dep[0]}@${dep[1]}`)
         .toString()
-        .replace(/,/g, " ")
-        .replace(/^/g, "")
-        // исключим зависимость, используемую только в этом файле, не относящуюся к шаблону
-        .replace(/fs-extra[^\s]+/g, "")
+        .replace(/,/g, ' ')
+        .replace(/^/g, '')
+        .replace(/fs-extra[^\s]+/g, '')
 )
 
 console.log()
 console.log(chalk.yellow('Initializing project..'))
 
-// создадим папку и инициализируем npm-проект
+const folder = process.argv[2]
+
 exec(
-    `mkdir ${process.argv[2]} && cd ${process.argv[2]} && mkdir config && cd config && mkdir utils && cd ../ && yarn init --yes`,
+    `mkdir ${folder} && cd ${folder} && mkdir config && mkdir config/utils && yarn init --yes`,
     (onInitError) => {
         if (onInitError) {
             console.log()
@@ -40,8 +39,7 @@ exec(
             return
         }
 
-        const packageJSON = `${process.argv[2]}/package.json`
-        // заменим скрипты, задаваемые по умолчанию
+        const packageJSON = `${folder}/package.json`
         fs.readFile(packageJSON, (error, file) => {
             if (error) {
                 throw error
@@ -49,7 +47,6 @@ exec(
             const data = file
                 .toString()
                 .replace('"license": "MIT"', scripts)
-                // .replace('"keywords": []', babel)
 
             fs.writeFile(packageJSON, data, (innerError) => {
                 if (innerError) {
@@ -61,44 +58,43 @@ exec(
         })
 
         const filesToCopy = [
-            ".editorconfig",
-            ".eslintrc.js",
-            "babel.config.js",
-            "README.md",
-            "tsconfig.json",
-            "types.d.ts",
-            "config/webpack.common.js",
-            "config/webpack.dev.js",
-            "config/webpack.prod.js",
-            "config/index.html",
-            "config/utils/cacheLoader.js",
-            "config/utils/constants.js",
-            "config/utils/cssProcessing.js",
-            "config/utils/eslintProcessing.js",
-            "config/utils/index.js",
+            '.editorconfig',
+            '.eslintrc.js',
+            'babel.config.js',
+            'README.md',
+            'tsconfig.json',
+            'types.d.ts',
+            'config/webpack.common.js',
+            'config/webpack.dev.js',
+            'config/webpack.prod.js',
+            'config/index.html',
+            'config/utils/cacheLoader.js',
+            'config/utils/constants.js',
+            'config/utils/cssProcessing.js',
+            'config/utils/eslintProcessing.js',
+            'config/utils/index.js',
         ]
 
         for (let i = 0; i < filesToCopy.length; i += 1) {
             fs.createReadStream(path.join(__dirname, `../${filesToCopy[i]}`))
                 .pipe(
-                    fs.createWriteStream(`${process.argv[2]}/${filesToCopy[i]}`)
+                    fs.createWriteStream(`${folder}/${filesToCopy[i]}`)
                 )
         }
-        // yarn, при установке пакета, удалит файл .gitignore, поэтому его нельзя скопировать из локальной папки шаблона,
-        // этот файл нужно загрузить. После отправки кода в GitHub-репозиторий пользуйтесь raw-файлом .gitignore
+
         https.get(
-            "https://raw.githubusercontent.com/iqwik/create-react-iqwik/master/.gitignore",
+            'https://raw.githubusercontent.com/iqwik/create-react-iqwik/master/.gitignore',
             (res) => {
-                res.setEncoding("utf8")
-                let body = ""
-                res.on("data", (data) => {
+                res.setEncoding('utf8')
+                let body = ''
+                res.on('data', (data) => {
                     body += data
                 })
-                res.on("end", () => {
+                res.on('end', () => {
                     fs.writeFile(
-                    `${process.argv[2]}/.gitignore`,
+                    `${folder}/.gitignore`,
                     body,
-                    { encoding: "utf-8" },
+                    { encoding: 'utf-8' },
                     (err) => {
                         if (err) throw err
                     }
@@ -109,13 +105,12 @@ exec(
         console.log()
         console.log(chalk.green.bold('yarn init -- done'))
         console.log()
-        // установка зависимостей
         console.log(chalk.yellow('Installing template dependencies -- it might take a few minutes...'))
 
         const devDeps = getDeps(packageJson.devDependencies)
         const deps = getDeps(packageJson.dependencies)
         exec(
-            `cd ${process.argv[2]} && node -v && yarn -v && yarn add -D ${devDeps} && yarn add ${deps}`,
+            `cd ${folder} && node -v && yarn -v && yarn add -D ${devDeps} && yarn add ${deps}`,
             (yarnError, yarnStdout, yarnStderr) => {
                 if (yarnError) {
                     console.log()
@@ -128,8 +123,7 @@ exec(
                 console.log(chalk.green.bold('Dependencies installed!'))
                 console.log()
                 console.log(chalk.yellow('Copying additional files..'))
-                // копирование дополнительных файлов с кодом
-                fs.copy(path.join(__dirname, "../src"), `${process.argv[2]}/src`)
+                fs.copy(path.join(__dirname, '../src'), `${folder}/src`)
                     .then(() => {
                         console.log()
                         console.log(chalk.green.bold('Success! Your project is now ready'))

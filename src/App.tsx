@@ -1,11 +1,14 @@
-import React from 'react'
+import * as React from 'react'
 
 import '_app/styles/theme.scss'
 
-const App: React.FunctionComponent = () => {
+function App() {
     React.useEffect(() => {
-        console.log('%c' + 
-            '\nWelcome to create-react-iqwik template!', 'font-size: 25px;', 
+        /* eslint-disable-next-line no-console */
+        console.log(
+            '%c'
+            + '\nWelcome to create-react-iqwik template!',
+            'font-size: 25px;',
             '\n\n🤝 Contribute to template: https://github.com/iqwik/create-react-iqwik',
             '\n🔎 Author website, visit: https://iqwik.ru\n\n',
         )
@@ -18,4 +21,4 @@ const App: React.FunctionComponent = () => {
     )
 }
 
-export default React.memo(App)
+export default React.memo(App as React.FunctionComponent)
