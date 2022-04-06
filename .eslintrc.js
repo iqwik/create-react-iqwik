@@ -125,5 +125,6 @@ module.exports = {
         'node_modules',
         'config',
         'build',
+        'bin'
     ]
 }

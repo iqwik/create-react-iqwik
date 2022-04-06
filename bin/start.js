@@ -3,7 +3,7 @@
 const fs = require('fs-extra')
 const path = require('path')
 const https = require('https')
-const { exec } = require('child_process')
+const cp = require('child_process')
 const chalk = require('chalk')
 
 const packageJson = require('../package.json')
@@ -30,13 +30,15 @@ console.log(chalk.yellow('Initializing project..'))
 
 const folder = process.argv[2]
 
-exec(
-    `mkdir ${folder} && cd ${folder} && mkdir config && mkdir config/utils && yarn init --yes`,
-    (onInitError) => {
+cp.exec(
+    `mkdir ${folder} && cd ${folder} && mkdir config && cd config && mkdir utils && cd ../ && yarn init --yes`,
+    (onInitError, stdout, stderr) => {
+        console.log(stdout, stderr)
         if (onInitError) {
-            console.log()
-            console.error(chalk.red(`Error: ${onInitError}`))
-            return
+            throw onInitError
+            // console.log()
+            // console.log(chalk.red(onInitError))
+            // return
         }
 
         const packageJSON = `${folder}/package.json`
@@ -50,7 +52,7 @@ exec(
 
             fs.writeFile(packageJSON, data, (innerError) => {
                 if (innerError) {
-                    console.error(chalk.red(innerError))
+                    console.log(chalk.red(innerError))
                     return
                 }
                 return true
@@ -109,12 +111,12 @@ exec(
 
         const devDeps = getDeps(packageJson.devDependencies)
         const deps = getDeps(packageJson.dependencies)
-        exec(
+        cp.exec(
             `cd ${folder} && node -v && yarn -v && yarn add -D ${devDeps} && yarn add ${deps}`,
             (yarnError, yarnStdout, yarnStderr) => {
                 if (yarnError) {
                     console.log()
-                    console.error(chalk.red(`Some error while installing dependencies ${yarnError}`))
+                    console.log(chalk.red(`Some error while installing dependencies ${yarnError}`))
                     return
                 }
                 console.log()
@@ -144,7 +146,7 @@ exec(
                         console.log()
                         console.log(chalk.yellow('Happy hacking!'))
                     })
-                    .catch((err) => console.error(err))
+                    .catch((err) => console.log(err))
             }
         )
     }
