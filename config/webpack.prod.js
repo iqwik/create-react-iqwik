@@ -13,7 +13,7 @@ module.exports = merge(common, {
     devtool: false,
     plugins: [
         new CleanWebpackPlugin({
-            cleanAfterEveryBuildPatterns: ['!assets/fonts/**', '!assets/img/**'],
+            cleanAfterEveryBuildPatterns: ['!assets/**'],
         }),
         new CopyWebpackPlugin({
             patterns: [{

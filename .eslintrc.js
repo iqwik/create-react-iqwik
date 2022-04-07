@@ -61,6 +61,10 @@ module.exports = {
         'react/no-array-index-key': 'off',
         'react/state-in-constructor': 'off',
         'react/display-name': 'off',
+        'react/function-component-definition': [2, {
+            namedComponents: 'arrow-function',
+            unnamedComponents: 'arrow-function',
+        }],
         'func-names': ['error', 'as-needed'],
         'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
         'react/no-multi-comp': ['error', { ignoreStateless: true }],

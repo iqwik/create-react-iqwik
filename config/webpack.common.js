@@ -11,7 +11,7 @@ module.exports = {
         filename: 'js/[name].js',
         chunkFilename: 'js/[name].js',
         // @SEE - https://webpack.js.org/guides/asset-modules/#custom-output-filename
-        assetModuleFilename: 'assets/fonts/[name][ext]',
+        assetModuleFilename: 'assets/[name][ext]?[hash]',
     },
     optimization: {
         splitChunks: {
@@ -49,14 +49,7 @@ module.exports = {
             cssProcessing({ withModules: false }),
             cssProcessing({ withModules: true }),
             {
-                test: /\.(png|jpg|gif)$/,
-                loader: 'file-loader',
-                options: {
-                    outputPath: 'assets/img',
-                },
-            },
-            {
-                test: /\.(woff(2)?|eot|ttf|otf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
+                test: /\.(png|jpe?g|gif|woff(2)?|eot|ttf|otf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/i,
                 type: 'asset/resource',
             },
         ],

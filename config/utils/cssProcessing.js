@@ -4,7 +4,7 @@ const cacheLoader = require('./cacheLoader')
 
 const cssProcessing = ({ withModules = true }) => {
     return {
-        test: withModules ? /\.module\.(css|scss)$/ : /^((?!\.module).)*\.(css|scss)$/,
+        test: withModules ? /\.module\.(css|s[ac]ss)$/ : /^((?!\.module).)*\.(css|s[ac]ss)$/,
         use: [
             {
                 loader: MiniCssExtractPlugin.loader,
